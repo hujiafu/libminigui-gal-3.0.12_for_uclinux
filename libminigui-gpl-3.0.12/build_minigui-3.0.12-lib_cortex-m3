@@ -14,19 +14,18 @@ export OBJDUMP=arm-uclinuxeabi-objdump
 
 export CFLAGS="-I. -I./include \
 -I${TOOLCHAIN}/include/c++/4.4.1 \
--I${TOOLCHAIN}/libc/usr/include \
 -I/usr/local/minigui/cross/arm/cortex-m3/include -mcpu=cortex-m3 -mthumb"
 
-export LDFLAGS="-mcpu=cortex-m3 -mthumb -L/usr/local/minigui/cross/arm/cortex-m3/lib \
--L${TOOLCHAIN}/libc/usr/lib"
+#export LDFLAGS= -mcpu=cortex-m3 -mthumb -L/usr/local/minigui/cross/arm/cortex-m3/lib
 
-export MINIGUI_LIBS="-mcpu=cortex-m3 -mthumb -lpng -pthread -ljpeg -lz -lfreetype"
+#export MINIGUI_LIBS="-mcpu=cortex-m3 -mthumb -lpng -pthread -ljpeg -lz -lfreetype"
 
-./configure --build=i686-linux --host=arm-linux --target=arm-linux --prefix=/usr/local/minigui/cross/arm/cortex-m3 --enable-static=yes --enable-shared=no --enable-customial=yes --enable-dlcustomial=no --with-targetname=lpc1788 --enable-tslibial=yes --enable-videofbcon=yes --enable-pcxvfb=no
+./configure --build=i686-linux --host=arm-linux --target=arm-linux --prefix=/usr/local/minigui/cross/arm/cortex-m3 --enable-static=yes --enable-shared=no \
+--enable-dummyial=no --enable-dlcustomial=no --enable-tslibial=yes --with-targetname=lpc1788 --with-pic=non-PIC --enable-videofbcon=yes --enable-pcxvfb=no --without-pic
 
-make 
+#make 
 
-make install
+#make install
 
-echo "libminigui-3.0.12 Make successful."
+#echo "libminigui-3.0.12 Make successful."
 
