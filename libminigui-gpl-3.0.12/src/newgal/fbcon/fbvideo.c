@@ -43,6 +43,8 @@ extern int sigma8654_hdmi_quit();
 #define FBACCEL_DEBUG   1
 #define FBCON_DEBUG   1
 */
+#define FBACCEL_DEBUG   1
+#define FBCON_DEBUG   1
 
 /* Initialization/Query functions */
 static int FB_GetFBInfo(VIDEO_MEM_INFO *video_mem_info);
@@ -78,6 +80,7 @@ static int FB_Available(void)
     int console;
     const char *GAL_fbdev;
 
+	printf("FB_Available\n");
     GAL_fbdev = getenv("FRAMEBUFFER");
     if ( GAL_fbdev == NULL ) {
         GAL_fbdev = "/dev/fb0";
@@ -86,6 +89,7 @@ static int FB_Available(void)
     if ( console >= 0 ) {
         close(console);
     }
+	printf("FB_Available %s\n", GAL_fbdev);
     return(console >= 0);
 }
 
@@ -173,11 +177,12 @@ static int FB_EnterGraphicsMode (_THIS)
 #ifdef _MGRM_PROCESSES
     if (mgIsServer) {
 #endif
+	printf("FB_EnterGraphicsMode\n");
         char* tty_dev;
         if (geteuid() == 0)
-            tty_dev = "/dev/tty0";
+            tty_dev = "/dev/ttyS0";
         else    /* not a super user, so try to open the control terminal */
-            tty_dev = "/dev/tty";
+            tty_dev = "/dev/ttyS0";
 
         /* open tty, enter graphics mode */
         ttyfd = open (tty_dev, O_RDWR);
@@ -215,6 +220,7 @@ static int FB_GetFBInfo(VIDEO_MEM_INFO *video_mem_info)
     const char *GAL_fbdev;
     int fd;
 
+	printf("FB_GetFBInfo\n");
     GAL_fbdev = getenv("FRAMEBUFFER");
     if ( GAL_fbdev == NULL ) {
         GAL_fbdev = "/dev/fb0";
@@ -269,6 +275,7 @@ static int FB_VideoInit(_THIS, GAL_PixelFormat *vformat)
     int i;
     const char *GAL_fbdev;
 
+	printf("FB_VideoInit\n");
     /* Initialize the library */
     GAL_fbdev = getenv("FRAMEBUFFER");
     if ( GAL_fbdev == NULL ) {
@@ -313,6 +320,7 @@ static int FB_VideoInit(_THIS, GAL_PixelFormat *vformat)
             return(-1);
     }
 
+	printf("finfo.smem_start = 0x%x, length = 0x%x\n", finfo.smem_start, finfo.smem_len);
     /* Memory map the device, compensating for buggy PPC mmap() */
     mapped_offset = (((long)finfo.smem_start) -
                     (((long)finfo.smem_start)&~(getpagesize () - 1)));
@@ -320,8 +328,9 @@ static int FB_VideoInit(_THIS, GAL_PixelFormat *vformat)
     
 #ifdef __uClinux__
 #  if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,0)
-    mapped_mem = mmap(NULL, mapped_memlen,
-                            PROT_READ|PROT_WRITE, MAP_PRIVATE, console_fd, 0);
+    //mapped_mem = mmap(NULL, mapped_memlen,
+    //                        PROT_READ|PROT_WRITE, MAP_PRIVATE, console_fd, 0);
+    mapped_mem = finfo.smem_start;
 #  else
     mapped_mem = mmap(NULL, mapped_memlen,
                             PROT_READ|PROT_WRITE, 0, console_fd, 0);
@@ -330,7 +339,9 @@ static int FB_VideoInit(_THIS, GAL_PixelFormat *vformat)
     mapped_mem = mmap(NULL, mapped_memlen,
                             PROT_READ|PROT_WRITE, MAP_SHARED, console_fd, 0);
 #endif
-    
+   
+	printf("mapped_mem = 0x%x\n", mapped_mem); 
+	printf("mapped_memlen = 0x%x\n", mapped_memlen); 
     if (mapped_mem == (char *)-1) {
         GAL_SetError("NEWGAL>FBCON: Unable to memory map the video hardware\n");
         mapped_mem = NULL;
@@ -504,6 +515,8 @@ static GAL_Surface *FB_SetVideoMode(_THIS, GAL_Surface *current,
     Uint32 Amask;
     char *surfaces_mem;
     int surfaces_len;
+
+	printf("FB_SetVideoMode \n");
 
 #ifdef __TARGET_STB810__
     bpp = 32;
