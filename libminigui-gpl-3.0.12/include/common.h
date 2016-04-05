@@ -228,7 +228,7 @@ MGUI_COMPILE_TIME_ASSERT(sint64, sizeof(Sint64) == 8);
  *
  * to write endianness independent code.
  */
-#if  defined(__i386__) || defined(__ia64__) || \
+#if  defined(__amd64) || defined(__i386__) || defined(__ia64__) || \
     (defined(__alpha__) || defined(__alpha)) || \
      defined(__arm__) || \
     (defined(__CC_ARM) && !defined(__BIG_ENDIAN)) || \
@@ -1711,7 +1711,7 @@ int init_minigui_printf (int (*output_char) (int ch),
 static inline void _MG_PRINTF(const char* fmt, ...)
 {
 #ifdef _DEBUG
-    va_list ap;
+	va_list ap;
     va_start(ap, fmt);
     vfprintf(stderr, fmt, ap);
     fprintf(stderr, "\n");
