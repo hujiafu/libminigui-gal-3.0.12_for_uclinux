@@ -14,9 +14,9 @@ export MINIGUI_LIBS= -lpng -pthread -ljpeg -lz -lfreetype
 
 #--without-pic --with-pic=non-PIC
 
-#make 
+make 
 
-#make install
+make install
 
-#echo "libminigui-3.0.12 Make successful."
+echo "libminigui-3.0.12 Make successful."
 

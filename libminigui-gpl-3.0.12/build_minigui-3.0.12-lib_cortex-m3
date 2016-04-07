@@ -22,13 +22,14 @@ export MINIGUI_LIBS= -mcpu=cortex-m3 -mthumb -lpng -pthread -ljpeg -lz -lfreetyp
 
 ./configure --build=i686-linux --host=arm-linux --target=arm-linux --prefix=/usr/local/minigui/cross/arm/cortex-m3 --enable-static=yes --enable-shared=no \
 --enable-dummyial=no --enable-dlcustomial=no --enable-textmode=no --enable-cursor=no --with-osname=uclinux --enable-tslibial=yes --with-targetname=lpc1788 \
---enable-videofbcon=yes --enable-pcxvfb=no --enable-pngsupport --enable-jpgsupport=yes
+--enable-videofbcon=yes --enable-pcxvfb=no --enable-pngsupport --enable-jpgsupport=yes \
+--enable-screensaver=no
 
 #--without-pic --with-pic=non-PIC
 
-#make 
+make 
 
-#make install
+make install
 
-#echo "libminigui-3.0.12 Make successful."
+echo "libminigui-3.0.12 Make successful."
 
