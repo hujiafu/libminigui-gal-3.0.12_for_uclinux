@@ -9,7 +9,8 @@ export MINIGUI_LIBS= -lpng -pthread -ljpeg -lz -lfreetype
 
 ./configure --build=i686-linux --host=i686-linux --target=i686-linux --prefix=/usr/local/minigui/local --enable-static=yes --enable-shared=no \
 --enable-qvfbial=yes --enable-dlcustomial=no --enable-textmode=no --enable-cursor=no --enable-tslibial=no \
---enable-videoqvfb=yes --enable-pngsupport=yes --enable-jpgsupport=yes
+--enable-videoqvfb=yes --enable-pngsupport=yes --enable-jpgsupport=yes \
+--enable-screensaver=no
 
 #--without-pic --with-pic=non-PIC
 
